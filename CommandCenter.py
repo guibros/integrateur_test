@@ -28,6 +28,21 @@ def username(gender, firstname, lastname):
         user += firstname
     return user
 
+def grabSpeechData(tryCount):
+    data = ""
+    counter = 0
+    while data == "" and counter != tryCount:
+        if counter != 0:
+            nlp.speak("Pouvez-vous répéter?")
+        data = nlp.listen()
+        print(f"while: {data}")
+        print(type(data))
+        counter += 1
+    if data == "":
+        nlp.speak("Passons a autre chose")
+    print(f"done: {data}")
+    return data
+
 #Database setup
 userGenderDB = "M"
 userFirstnameDB = "Ginette"
@@ -73,9 +88,7 @@ while running:
         if SceneState == Scene.first:
             #GUI greetings
             nlp.speak(f"Bonjour, comment aller vous aujourd'hui {userNameGreeting}")
-            data = ""
-            while data == "":
-                data = nlp.listening()
+            data = grabSpeechData(3)
             SentimentState = nlp.sentimentAnalysis(data)
             if SentimentState == "POS":
                 SceneState = Scene.positive
@@ -89,23 +102,17 @@ while running:
         elif SceneState == Scene.positive:
             nlp.speak("Content de voir que vous allez bien.  Puis-je vous aider aujourd'hui?")
             #GUI positif
-            data = ""
-            while data == "":
-                data = nlp.listening()
+            data = grabSpeechData(3)
             pass
         elif SceneState == Scene.neutral:
             nlp.speak("Avez vous un besoin particulier aujourd'hui? Puis-je vous aider?")
             #GUI neutre
-            data = ""
-            while data == "":
-                data = nlp.listening()
+            data = grabSpeechData(3)
             pass
         elif SceneState == Scene.negative:
             nlp.speak("Vous semblez en difficulté, comment puis-je vous aider?")
             #GUI negatif
-            data = ""
-            while data == "":
-                data = nlp.listening()
+            data = grabSpeechData(3)
             pass
         elif SceneState == Scene.none:
             pass

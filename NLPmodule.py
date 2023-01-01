@@ -27,8 +27,7 @@ class NLP:
             except Exception as ex:
                 print(ex)
                 print("cant return text")    
-                self.speak("Je comprend mal.")
-                return ""      
+                self.speak("Je comprend mal.  Pouvez vous repeter?")      
                 
     def sentimentAnalisys(self, data):
         score = self.sia.polarity_scores(data)
@@ -41,6 +40,9 @@ class NLP:
         elif score['compound'] <= -0.05:
             return "NEG"
 
+nlp = NLP()
 
+text = "bonjour"
+nlp.speak(text)
 
 

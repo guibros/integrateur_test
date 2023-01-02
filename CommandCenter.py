@@ -1,5 +1,6 @@
 from NLPclass import NLP
 from mqttConfig import MQTTcontroller
+from profilAtlas import Profil
 
 from threading import Thread
 from enum import Enum

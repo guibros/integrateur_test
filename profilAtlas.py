@@ -156,14 +156,17 @@ class Profil:
                 cursor = collection.find({"Key": self.key})
                 for document in cursor:
                     print(document)
+                    return document
 
     # for MQTT use
     def pop_profil(self):
         for item in db.list_collection_names():
+            data = {}
             collection = db[item]
             cursor = collection.find({"Key": self.key})
             for document in cursor:
                 print(document)
+                return document
 
     def delete_profil(self):
         for item in db.list_collection_names():

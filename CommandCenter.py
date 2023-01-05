@@ -44,6 +44,17 @@ def grabSpeechData(tryCount):
     print(f"done: {data}")
     return data
 
+def analyzeSpeech(text):
+    pass
+
+class kivy(App):
+    def build(self):
+        #returns a window object with all it's widgets
+        self.window = GridLayout()
+        self.window.cols = 1   
+
+        
+
 #Database setup
 userGenderDB = "M"
 userFirstnameDB = "Ginette"
@@ -65,6 +76,8 @@ running = True
 
 while running:
     
+    #kivypagerunning
+
     # lecture des signaux MQTT et ajustement de MQTTState
     if not mqttProxi & mqttFacial == "none":
         CurrentState = MQTTsignal.baseState
@@ -104,16 +117,19 @@ while running:
             nlp.speak("Content de voir que vous allez bien.  Puis-je vous aider aujourd'hui?")
             #GUI positif
             data = grabSpeechData(3)
+            analyzeSpeech(data)
             pass
         elif SceneState == Scene.neutral:
             nlp.speak("Avez vous un besoin particulier aujourd'hui? Puis-je vous aider?")
             #GUI neutre
             data = grabSpeechData(3)
+            analyzeSpeech(data)
             pass
         elif SceneState == Scene.negative:
             nlp.speak("Vous semblez en difficulté, comment puis-je vous aider?")
             #GUI negatif
             data = grabSpeechData(3)
+            analyzeSpeech(data)
             pass
         elif SceneState == Scene.none:
             pass

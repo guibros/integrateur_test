@@ -214,6 +214,12 @@ class NLP:
         elif score['compound'] <= -0.05:
             return "NEG"
 
+    def analyzeVariable(self, text, keyword):
+        if keyword in text:
+            return True
+        else:
+            return False
+
     def analyze(self, text):           
         if text == "":
             pass
@@ -510,3 +516,5 @@ class NLP:
         elif "activités" in text:
             print("activite")
             return "activite" 
+        
+   

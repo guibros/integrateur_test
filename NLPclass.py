@@ -189,7 +189,7 @@ class NLP:
             self.recognizer.adjust_for_ambient_noise(source)
             print("Listening...")
             print("say somthing")
-            audioData = self.recognizer.listen(source) 
+            audioData = self.recognizer.listen(source, 5, 10) 
             print("try something2323")
             try:
                 print("try something")

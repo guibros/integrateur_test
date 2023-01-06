@@ -1,29 +1,11 @@
 from profilAtlas import Profil
 from atlasProfilV2 import RPA
 from NLPclass import NLP
-from pymongo import MongoClient as mongo
-
-
-# CREATION OF RPA CLASS
 
 
 
 
 
-# profil = Profil("Bill")
-
-# profilFetch = profil.fetch_profil()
-
-# profilPop = profil.pop_profil()
-
-# print(profilFetch)
-
-# print(profilPop)
-
-# print(profilFetch['Last_Name'])
-# print(profilFetch['First_Name'])
-# print(profilFetch['Personnel']['2'][-1])
-# print(profilFetch['Medicament'][-1])
 
 nlp = NLP()
 rpa = RPA()
@@ -33,19 +15,57 @@ userdata = rpa.findClient(userid)
 print(userdata['Contacts']['Contact_1'])
 namelist = []
 lastlist = []
+fullcontactlist = []
 
 
 for contact in userdata['Contacts'].values():
     print(contact)
+    fullcontactlist.append(contact)
     namelist.append(contact['Name'])
     lastlist.append(contact['Last'])
 
     
 print(namelist)
 print(lastlist)
+print(fullcontactlist)
     
 fullnamelist = list(zip(namelist,lastlist))
 print(fullnamelist)
+
+
+nlp = NLP()
+
+nlp.speak("parler")
+data = nlp.listen()
+
+nlp.speak(data)
+result = nlp.analyze(data)
+nlp.speak(result)
+
+if result == "appel":
+    for contact in fullcontactlist:
+        if nlp.analyzeVariable(data, contact['Name']):
+            #return tel from name
+            print(contact['Telephone'])
+        else:
+            nlp.speak("Aucun contact a ce nom")
+            break
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

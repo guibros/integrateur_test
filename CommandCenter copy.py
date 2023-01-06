@@ -8,7 +8,7 @@ import time
 
 
 RPA_db = RPA()
-NLP = NLP()
+nlp = NLP()
 
 class STATE(Enum):
     baseState = "basestate"
@@ -37,7 +37,21 @@ class CommandCenter:
         self.main = 'Bonjour'
         self.secondary = 'Assistant RPA'
 
-  
+    def grabSpeechData(self, tryCount):
+        data = ""
+        counter = 0
+        while data == "" and counter != tryCount:
+            if counter != 0:
+                nlp.speak("Pouvez-vous répéter?")
+            data = nlp.listen()
+            print(f"while: {data}")
+            print(type(data))
+            counter += 1
+        if data == "":
+            nlp.speak("Passons a autre chose")
+        print(f"done: {data}")
+        return data
+    
     def username(self, firstname, lastname, gender='M'):
         user = ""
         if gender == "M":
@@ -54,56 +68,92 @@ class CommandCenter:
             # lecture des signaux MQTT et ajustement de MQTTState
             if self.MQTTState.message == 'Nothing':  # What to do when nothing
                 CurrentSTATE = STATE.baseState
-                self.main = f''
-                self.secondary = 'En veille'
                 print(CurrentSTATE)
             elif self.MQTTState.message == 'Object':  # What to do when object
                 CurrentSTATE = STATE.objectState
-                self.main = f''
-                self.secondary = 'Objet present'
                 print(CurrentSTATE)
             elif self.MQTTState.message == 'IdentificationDelay':  # What to do when face
                 CurrentSTATE = STATE.identificationDelay
-                self.secondary = 'Identification en cours.'
-                self.secondary = 'Identification en cours..'
-                self.secondary = 'Identification en cours...'
                 print(CurrentSTATE)
             elif self.MQTTState.message == 'Unknown':  # What to do when face
                 CurrentSTATE = STATE.unknownState 
-                self.main = f''
-                self.secondary = 'Utilisateur inconnu'
                 print(CurrentSTATE)
             elif 'Identified: ' in self.MQTTState.message:  # What to do when recognized face
                 CurrentSTATE = STATE.facialState
-                UserIdentity = self.MQTTState.message.strip('Identified: ')
-                CurrentUSER = RPA_db.findClient(UserIdentity)
-                print(CurrentSTATE, f'User: {UserIdentity}')
-                self.main = f'Bonjour {UserIdentity}'
-                self.secondary = 'Comment te sens-tu ?'
+                UserId = self.MQTTState.message.strip('Identified: ')
+                CurrentUSER = RPA_db.findClient(UserId)
+                print(CurrentSTATE, f'User: {UserId}')
                 
-            self.date = dt.now().strftime("%Y-%m-%d")
-            self.time = dt.now().strftime("%I:%M:%S %p")
             
             #######################
             # SECTION SCENE STATE #
             #######################
             
+            if CurrentSTATE == STATE.baseState: #GUI vide
+                self.main = ''
+                self.secondary = ''
+                self.date = ''
+                self.time = ''
+                print(CurrentSTATE)
+            elif CurrentSTATE == STATE.objectState: #GUI vide
+                self.main = ''
+                self.secondary = 'Objet Présent'
+                self.date = ''
+                self.time = ''
+                print(CurrentSTATE)
+            elif CurrentSTATE == STATE.identificationDelay: #GUI gif
+                self.main = ''
+                self.secondary = 'identification en cours'
+                self.date = ''
+                self.time = ''
+                print(CurrentSTATE)
+            elif CurrentSTATE == STATE.unknownState: #GUI 'public'
+                self.main = 'current activities'
+                self.secondary = ''
+                self.date = 'dt.now().strftime("%Y-%m-%d")'
+                self.time = 'dt.now().strftime("%I:%M:%S %p")'
+                print(CurrentSTATE)
+            elif CurrentSTATE == STATE.facialState: #GUI 'public'
+                
+                self.date = 'dt.now().strftime("%Y-%m-%d")'
+                self.time = 'dt.now().strftime("%I:%M:%S %p")'
+                
+                
+                self.main = f'Bonjour {UserId}'
+                userName = CurrentUSER['ClientInfo']['firstName']
+                self.secondary = 'Comment te sens-tu ?'
+                nlp.speak(f"Bonjour, comment aller vous aujourd'hui {userName}")
+                data = self.grabSpeechData(3)
+                SentimentState = nlp.sentimentAnalysis(data)
+                if SentimentState == "POS":
+                    SceneState = Scene.positive
+                    print(Scene.positive)
+                elif SentimentState == "NEU":
+                    SceneState = Scene.neutral
+                    print(Scene.neutral)
+                elif SentimentState == "NEG":
+                    SceneState = Scene.negative
+                    print(Scene.negative)
+                
+               
+            
+            
  
             time.sleep(0.5)
         print('Command Center Loop ending')
 
-if __name__ == '__main__':
-    try:
-        # Instanciation du module de langue naturel
-        nlp = NLP()
+# if __name__ == '__main__':
+#     try:
+#         # Instanciation du module de langue naturel
+#         nlp = NLP()
         
-        # Instanciation de la base de donnees
-        RPA_db = RPA()
+#         # Instanciation de la base de donnees
+#         RPA_db = RPA()
         
-        # Run Command Center loop Thread
-        cc = CommandCenter()
-        commandCenterThread = Thread(target=cc.runCommandCenter)
-        commandCenterThread.start()
+#         # Run Command Center loop Thread
+#         cc = CommandCenter()
+#         commandCenterThread = Thread(target=cc.runCommandCenter)
+#         commandCenterThread.start()
 
-    except KeyboardInterrupt:
-        cc.running = False
+#     except KeyboardInterrupt:
+#         cc.running = False

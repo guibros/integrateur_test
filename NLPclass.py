@@ -74,8 +74,8 @@ class NLP:
                         u"comment sera la météo futures?",
 
                         #medicaments
-                        u"Quels sont les médicaments que je dois prendre?"
-                        u"Quels sont mes médicaments?"
+                        u"Quelles sont les médicaments que je dois prendre?"
+                        u"Quelles sont mes médicaments?"
                         u"C'est quoi mes médicaments?"
                         u"Est-ce que j'ai des médicaments?"
                         u"Quand je dois prendre mes médicaments?"
@@ -281,8 +281,8 @@ class NLP:
                         print("météo futur")
                         return "meteo futur"
                         
-                    elif modele in {"Quels sont les médicaments que je dois prendre?",
-                                    "Quels sont mes médicaments?",
+                    elif modele in {"Quelles sont les médicaments que je dois prendre?",
+                                    "Quelles sont mes médicaments?",
                                     "C'est quoi mes médicaments?",
                                     "Est-ce que j'ai des médicaments?",
                                     "Quand je dois prendre mes médicaments?",
@@ -385,13 +385,15 @@ class NLP:
                         print("activité")
                         return "activité"
                     else:
-                        self.speak("Commande incomprise.")
+                        self.speak("Commande non-associé.")
                         print("cant associate model")
+                        return "no model"
                 else:
                     self.speak("Commande incomprise.")
                     print("score<90")
+                    return "model underscore"
             except:
-                self.speak("Je comprend mal.")
+                self.speak("analyse incomplète")
                 print("cant extract model")    
 
 

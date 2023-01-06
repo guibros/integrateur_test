@@ -407,7 +407,7 @@ class NLP:
                     else:
                         print("cant associate model")
                         try:
-                            self.motClef(text)
+                            return self.motClef(text)
                         except:
                             self.speak("Commande non-associé.")
                             print("cant associate model")

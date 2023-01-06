@@ -17,9 +17,14 @@ class NLP:
         
     def listen(self):
         with speechRecognition.Microphone() as source:
+            self.recognizer.pause_threshold = 1
+            self.recognizer.adjust_for_ambient_noise(source)
+            print("Listening...")
             print("say somthing")
             audioData = self.recognizer.listen(source) 
+            print("try something2323")
             try:
+                print("try something")
                 data = self.recognizer.recognize_google(audioData, language="fr-FR")
                 print(data)
                 #self.speak(data)
@@ -40,7 +45,5 @@ class NLP:
             return "NEU"
         elif score['compound'] <= -0.05:
             return "NEG"
-
-
 
 

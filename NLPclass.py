@@ -385,6 +385,7 @@ class NLP:
                         print("activité")
                         return "activité"
                     else:
+                        print("cant associate model")
                         try:
                             self.motClef(text)
                         except:
@@ -392,15 +393,20 @@ class NLP:
                             print("cant associate model")
                             return "no model"
                 else:
+                    print("score<90")
                     try:
-                        self.motClef(text)
+                        return self.motClef(text)
                     except:
                         self.speak("Commande incomprise.")
                         print("score<90")
                         return "model underscore"
             except:
-                self.speak("analyse incomplète")
                 print("cant extract model")    
+                try:
+                    return self.motClef(text)
+                except:
+                    self.speak("analyse incomplète")
+                    print("cant extract model")    
 
     def motClef(self, text):
         if "heure" in text:

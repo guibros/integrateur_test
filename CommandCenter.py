@@ -53,6 +53,10 @@ class kivy(App):
         self.window = GridLayout()
         self.window.cols = 1   
 
+def call(number):
+    pass
+
+
         
 
 #Database setup

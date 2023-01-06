@@ -144,7 +144,7 @@ class NLP:
                         u"Je voudrais savoir à quel moment je peux prendre rendez-vous chez le médecin.",
                         u"Pouvez-vous me dire comment prendre rendez-vous avec le médecin?",
 
-                        #Contacter
+                        #Contact
                         u"Quels est ma liste de contact",
                         u"quels sont mes contacts",
                         u"Comment puis-je acceder a mes contacts",
@@ -385,15 +385,102 @@ class NLP:
                         print("activité")
                         return "activité"
                     else:
-                        self.speak("Commande non-associé.")
-                        print("cant associate model")
-                        return "no model"
+                        try:
+                            self.motClef(text)
+                        except:
+                            self.speak("Commande non-associé.")
+                            print("cant associate model")
+                            return "no model"
                 else:
-                    self.speak("Commande incomprise.")
-                    print("score<90")
-                    return "model underscore"
+                    try:
+                        self.motClef(text)
+                    except:
+                        self.speak("Commande incomprise.")
+                        print("score<90")
+                        return "model underscore"
             except:
                 self.speak("analyse incomplète")
                 print("cant extract model")    
 
-
+    def motClef(self, text):
+        if "heure" in text:
+            print("heure")
+            return "heure"
+        elif "météo" in text:
+            print("meteo")
+            return "meteo"        
+        elif "température" in text:
+            print("meteo")
+            return "meteo" 
+        elif "médicament" in text:
+            print("medicament")
+            return "medicament" 
+        elif "médicaments" in text:
+            print("medicament")
+            return "medicament" 
+        elif "prescription" in text:
+            print("medicament")
+            return "medicament" 
+        elif "prescriptions" in text:
+            print("medicament")
+            return "medicament" 
+        elif "rendez-vous" in text:
+            print("meeting")
+            return "meeting" 
+        elif "meeting" in text:
+            print("meeting")
+            return "meeting" 
+        elif "médecin" in text:
+            print("medecin")
+            return "medecin" 
+        elif "médecins" in text:
+            print("medecin")
+            return "medecin" 
+        elif "docteur" in text:
+            print("medecin")
+            return "medecin" 
+        elif "docteurs" in text:
+            print("medecin")
+            return "medecin" 
+        elif "contacts" in text:
+            print("contact")
+            return "contact" 
+        elif "contact" in text:
+            print("contact")
+            return "contact" 
+        elif "contacter" in text:
+            print("contact")
+            return "contact" 
+        elif "contacté" in text:
+            print("contact")
+            return "contact" 
+        elif "appeller" in text:
+            print("appel")
+            return "appel" 
+        elif "appellé" in text:
+            print("appel")
+            return "appel" 
+        elif "appelle" in text:
+            print("appel")
+            return "appel"  
+        elif "appel" in text:
+            print("appel")
+            return "appel"  
+        elif "téléphone" in text:
+            print("appel")
+            return "appel" 
+        elif "téléphoner" in text:
+            print("appel")
+            return "appel" 
+        elif "téléphoné" in text:
+            print("appel")
+            return "appel" 
+        elif "iphone" in text:
+            print("appel")
+            return "appel" 
+        elif "activité" in text:
+            print("activite")
+            return "activite" 
+        elif "activités" in text:
+            print("activite")
+            return "activite" 

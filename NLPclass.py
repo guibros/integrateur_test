@@ -153,6 +153,15 @@ class NLP:
                         u"ou sont mes contacts",
                         u"Donne-moi la liste de mes contacts.",
                         u"Dis-moi comment accéder à mes contacts.",
+                        
+                        #appel
+                        u"appel le centre",
+                        u"appelle",
+                        u"appeler",
+                        u"telephoner",
+                        u"telephone",
+                        u"rejoins",
+                        u"rejoindre",
 
                         #activités
                         u"quels sont mes activités?",
@@ -369,6 +378,17 @@ class NLP:
                                     }:
                         print("contact")
                         return "contact"
+                    
+                    elif modele in {"appel le centre",
+                                    "appelle",
+                                    "appeler",
+                                    "telephoner",
+                                    "telephone",
+                                    "rejoins",
+                                    "rejoindre"
+                                    }:
+                        print("appel")
+                        return "appel"                    
                         
                     elif modele in {"quels sont mes activités?",
                                     "quels sont les activités?",

@@ -208,7 +208,14 @@ reponse:
 Voici votre liste de contact.  Dites Appel suivi du nom de votre contact pour lancer un appel
 [show contact list]
 
-
+#appel
+"appel le centre",
+"appelle",
+"appeler",
+"telephoner",
+"telephone",
+"rejoins",
+"rejoindre",
 
 
 activités

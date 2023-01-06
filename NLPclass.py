@@ -210,7 +210,7 @@ class NLP:
             pass
         else:
             try:
-                (modele, score) = process.extractOne(text, phrases)
+                (modele, score) = process.extractOne(text, self.phrases)
                 print(modele, score)
                 if score >= 89:
                     if modele in {  "Quelle heure est-il ?",

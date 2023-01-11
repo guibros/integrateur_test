@@ -1,0 +1,53 @@
+#:kivy 1.0.9
+
+<BackgroundColor@Widget>
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<MainLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+
+<SecondaryLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+
+
+<MyGridLayout>:
+    
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+        # GridLayout:
+        #     cols:2
+
+        #     Label:
+        #         id: date
+        #         font_size: 22
+
+        #     Label:
+        #         id: time
+        #         font_size: 22
+
+        MainLabel:
+            id: main
+            text_size: self.size
+            font_size: 35
+            halign: 'center'
+            # valign: 'top'
+        Image:
+            id: spinner
+            source: 'images/black.png'
+            anim_delay: 0
+        SecondaryLabel:
+            id: secondary
+            text_size: self.size
+            font_size: 27
+            halign: 'center'
+            valign: 'top'
+
+ 
